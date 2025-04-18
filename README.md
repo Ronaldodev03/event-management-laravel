@@ -31,3 +31,11 @@ Models represent your application's data and business logic. They:
 -   Handle data operations: Create, read, update, and delete records.
 
 -   Protect attributes: Your $fillable array specifies which fields can be mass-assigned.
+
+## factory & seeder:
+
+-   php artisan make:factory EventFactory --model=Event
+
+-   php artisan make:sedeer EventSeeder
+
+-   php artisan make:sedeer AttendeeSeeder (doesn't need a factory)
