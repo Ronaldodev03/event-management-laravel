@@ -20,5 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('events', EventController::class);
-Route::apiResource('events.attendees', AttendeeController::class)->scoped(['attendee','event']); //no entiendo esta linea --> 'events.attendees' tiene que ver con que los attendees tengan adelante "event" en la ruta del CRUD, se ve con php artisan r:l --> 'scoped(['attendee','event'])' tiene que ver con route model binding
+/* 
+These routes set up RESTful API endpoints where events has standard CRUD operations, while events.attendees creates nested routes for managing attendees within specific events. 
+The scoped() method adds automatic validation to ensure attendees belong to their parent event, preventing unauthorized access. 
+For example, /events/1/attendees/3 will only work if attendee 3 is actually associated with event 1, otherwise returning a 404 error. 
+This enforces data integrity directly in the routing layer.
+note: php artisan route:list --> command to check the route list
+*/
+Route::apiResource('events', EventController::class);//
+Route::apiResource('events.attendees', AttendeeController::class)->scoped(['attendee','event']); //
