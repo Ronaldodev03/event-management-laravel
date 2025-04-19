@@ -18,7 +18,7 @@ class EventResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'descriptionm'=>$this->description,
+            'description'=>$this->description,
             'start_time'=>$this->start_time,
             'end_time'=>$this->end_time,
             'user'=> new UserResource($this->whenLoaded('user')), // The whenLoaded method checks if a relationship was loaded (via with() or load()) in the Eloquent query (done in the controller) before including it in the API response.
