@@ -57,3 +57,30 @@ Route Model Binding automatically injects Laravel model instances into controlle
 -   php artisan make:resource UserResource
 
 Laravel API Resources transform Eloquent models into JSON responses with a clean, consistent structure. They act as a middle layer between models and API responses, letting us control exactly what data gets returned (e.g., hiding sensitive fields, formatting dates, or including relationships). For example, an EventResource can customize how event data appears in API responses without modifying the model itself. We can use them to standardize responses, reduce redundancy, and handle complex data transformations.
+
+## Query Builder
+
+You get a query builder when you call an Eloquent method with parentheses ():
+
+### When You Get a Query Builder Instance
+
+-   $builder1 = Event::query();
+-   $builder2 = $event->attendees(); // With parentheses
+-   $builder3 = User::where('active', true);
+
+### How to Execute a Query Builder
+
+Convert it to usable data with these methods:
+
+#### Get a Collection (all results)
+
+        $collection = $builder->get();
+
+#### Get a Paginator (chunked results)
+
+        $paginator = $builder->paginate(10);
+
+#### Get First/Find Specific Record
+
+        $singleModel = $builder->first();
+        $singleModel = $builder->find(1);

@@ -13,12 +13,13 @@ class EventController extends Controller
     // all events
     public function index()
     {
-        // return Event::all(); // this returns the array without meta data
-        // return EventResource::collection(Event::all()); // this returns an object with meta data and then a data field has the array with the actual data.
-
+       // return Event::all(); // this returns the array without meta data
+       // return EventResource::collection(Event::all()); // this returns an object with meta data and then a data field has the array with the actual data.
+        
         // EventResource --> controlo los campos que se mostraran en la respuesta
-        // with('user') --> agrega la info del usuario a la respuesta de los eventos, eso debe estar configurado en el resource.
-        return EventResource::collection(Event::with('user')->get());
+        // with('user') --> agrega la info del usuario a la respuesta de los eventos, eso debe estar configurado en el resource
+        //return EventResource::collection(Event::with('user')->get());
+        return EventResource::collection(Event::with('user')->paginate());
     }
 
 
@@ -62,7 +63,7 @@ class EventController extends Controller
     {
         //return $event;
         //return new EventResource($event);
-        $event->load('user','attendees'); // cargo en la respuesta de los eventos la info del user y de los attendees, eso tiene que estar configurado en el resource.
+        $event->load('user','attendees'); // cargo en la respuesta de los eventos la info del user y de los attendees, eso tiene que estar configurado en el resource
         return new EventResource($event);
     }
 

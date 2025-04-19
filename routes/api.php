@@ -27,5 +27,8 @@ For example, /events/1/attendees/3 will only work if attendee 3 is actually asso
 This enforces data integrity directly in the routing layer.
 note: php artisan route:list --> command to check the route list
 */
-Route::apiResource('events', EventController::class);//
-Route::apiResource('events.attendees', AttendeeController::class)->scoped(['attendee','event']); //
+//Route::apiResource('events', EventController::class);
+//Route::apiResource('events.attendees', AttendeeController::class)->scoped(['attendee','event']); // laravel also can scope automatically
+
+Route::apiResource('events', EventController::class);
+Route::apiResource('events.attendees', AttendeeController::class)->scoped()->except(['update']); // we don't have update in the controller

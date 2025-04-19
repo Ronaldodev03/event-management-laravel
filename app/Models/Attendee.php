@@ -10,6 +10,8 @@ class Attendee extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id'];
+
     /* 
     - This defines that an Attendee record "belongs to" a User
     - It corresponds to the foreignIdFor(User::class) in the events migration
