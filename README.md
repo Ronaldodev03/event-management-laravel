@@ -39,3 +39,11 @@ Models represent your application's data and business logic. They:
 -   php artisan make:sedeer EventSeeder
 
 -   php artisan make:sedeer AttendeeSeeder (doesn't need a factory)
+
+## controllers:
+
+-   php artisan make:controller Api/EventController --api (/Api for the route & --api for having default methods for apis in the controller)
+
+### Route Model Binding:
+
+Route Model Binding automatically injects Laravel model instances into controller methods by matching route parameters (like {event}) to database records - when you type-hint a model (e.g., Event $event), Laravel fetches it by ID (or custom column) and returns a 404 if not found, eliminating manual queries like Event::find($id). It works for both primary keys (/events/1) and custom fields (like slugs /events/my-event), and can enforce relationships in nested routes (e.g., ensuring an attendee belongs to an event).

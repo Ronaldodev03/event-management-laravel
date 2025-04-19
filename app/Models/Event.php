@@ -11,6 +11,7 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable=["name", "description", "start_time", "end_time", "user_id"]; // for mass assignment
 
     /* 
     - This defines that an Event "belongs to" a User (the creator/organizer)
