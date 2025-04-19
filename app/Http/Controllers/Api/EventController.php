@@ -18,8 +18,15 @@ class EventController extends Controller
         
         // EventResource --> controlo los campos que se mostraran en la respuesta
         // with('user') --> agrega la info del usuario a la respuesta de los eventos, eso debe estar configurado en el resource
-        //return EventResource::collection(Event::with('user')->get());
-        return EventResource::collection(Event::with('user')->paginate());
+        // return EventResource::collection(Event::with('user')->get());
+        // return EventResource::collection(Event::with('user')->paginate());
+
+        $query = Event::query(); // Gets a fresh query builder instance
+        if (request()->has('name')) { // Checks for a URL parameter like ?name=Concert
+            $query->where('name', 'like', '%' . request('name') . '%'); // Chains conditions 
+        }
+        $events = $query->with('user')->paginate(); // Executes the query to get data
+        return EventResource::collection($events);
     }
 
 
