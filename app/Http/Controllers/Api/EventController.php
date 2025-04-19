@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
+use App\Http\Traits\CanLoadRelationships;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    use CanLoadRelationships;
+ 
+    private array $relations = ['user', 'attendees', 'attendees.user'];
 
     // all events
     public function index()
@@ -21,11 +25,15 @@ class EventController extends Controller
         // return EventResource::collection(Event::with('user')->get());
         // return EventResource::collection(Event::with('user')->paginate());
 
-        $query = Event::query(); // Gets a fresh query builder instance
-        if (request()->has('name')) { // Checks for a URL parameter like ?name=Concert
-            $query->where('name', 'like', '%' . request('name') . '%'); // Chains conditions 
-        }
-        $events = $query->with('user')->paginate(); // Executes the query to get data
+        // $query = Event::query(); // Gets a fresh query builder instance
+        // if (request()->has('name')) { // Checks for a URL parameter like ?name=Concert
+        //     $query->where('name', 'like', '%' . request('name') . '%'); // Chains conditions 
+        // }
+        // $events = $query->with('user')->paginate(); // Executes the query to get data
+        // return EventResource::collection($events);
+        
+        $query = $this->loadRelationships(Event::query()); // Checks for a URL parameter like ?include=user,attendees,attendees.user
+        $events =  $query->latest()->paginate();
         return EventResource::collection($events);
     }
 

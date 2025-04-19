@@ -84,3 +84,17 @@ Convert it to usable data with these methods:
 
         $singleModel = $builder->first();
         $singleModel = $builder->find(1);
+
+## Relation Loading Trait (this are put manually in the code, there is no command):
+
+A "Relation Loading Trait" in Laravel is a reusable trait that standardizes how relationships (like user or attendees) are eager-loaded in queries, letting you dynamically load relationships via URL parameters (e.g., ?with=user,attendees). It checks valid relationships, applies eager-loading, and keeps controllers clean—ideal for APIs where clients control which relations to fetch.
+
+-   I only included in index for EventController
+
+-   If I want to include it in other method of the EventController I would have to change the return, for example (show method):
+
+    public function show(Event $event)
+    {
+        // return new EventResource($event);
+    return new EventResource($this->loadRelationships($event));
+    }
