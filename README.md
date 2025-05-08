@@ -98,3 +98,7 @@ A "Relation Loading Trait" in Laravel is a reusable trait that standardizes how 
         // return new EventResource($event);
     return new EventResource($this->loadRelationships($event));
     }
+
+## auth:
+
+-   php artisan make:controller Api/EventController
