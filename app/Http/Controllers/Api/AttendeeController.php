@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class AttendeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show', 'update']);
+        $this->authorizeResource(Attendee::class, 'attendee');
+    }
+
     public function index(Event $event)    // the event is part of the url, that's why I can take it here with Route Model Binding 
     {
         $attendees = $event->attendees()->latest();    // get latest attendees of an event
@@ -20,7 +26,7 @@ class AttendeeController extends Controller
     public function store(Request $request, Event $event)   //Route Model Binding  
     {
         $attendee = $event->attendees()->create([
-            'user_id' => 1 // fixed to 1 for now
+            'user_id' => $request->user()->id
         ]);
 
         return new AttendeeResource($attendee);
@@ -31,8 +37,9 @@ class AttendeeController extends Controller
         return new AttendeeResource($attendee);
     }
 
-    public function destroy(string $event, Attendee $attendee) //Route Model Binding 
+    public function destroy(Event  $event, Attendee $attendee) //Route Model Binding 
     {
+          // $this->authorize('delete-attendee', [$event, $attendee]);
          $attendee->delete();
  
          return response(status: 204);
